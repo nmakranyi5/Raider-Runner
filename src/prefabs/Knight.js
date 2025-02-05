@@ -1,5 +1,5 @@
-// Rocket prefab
-class Raider extends Phaser.GameObjects.Sprite {
+// Knight prefab
+class Knight extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame) {
       super(scene, x, y, texture, frame);
       // add object to existing scene

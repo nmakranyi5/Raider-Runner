@@ -1,11 +1,9 @@
-// Rocket prefab
-class Raider extends Phaser.GameObjects.Sprite {
+// Coin prefab
+class Coin extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame) {
       super(scene, x, y, texture, frame);
       // add object to existing scene
       scene.add.existing(this);
-      this.isFiring = false;
-      this.moveSpeed = 2;
       //this.sfxShot = scene.sound.add('sfx-shot');
     }
 
