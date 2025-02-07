@@ -5,7 +5,7 @@ class Title extends Phaser.Scene {
 
     preload() {
         // load images/tile sprites
-        this.load.image('starfield', './assets/starfield2.png');
+        this.load.image('background', './assets/background.png');
         // load audio
         this.load.audio('sfx-select', './assets/sfx-select.wav')
     }
@@ -24,9 +24,9 @@ class Title extends Phaser.Scene {
           fixedWidth: 0
         }
         // animation configuration
-        this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
+        this.starfield = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
         // display title text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'RAIDER RUMBLE', titleConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'RAIDER RUNNER', titleConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'Press SPACE to continue', titleConfig).setOrigin(0.5);
         titleConfig.backgroundColor = '#00FF00';
         titleConfig.color = '#000';

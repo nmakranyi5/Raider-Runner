@@ -8,11 +8,19 @@ let config = {
     type: Phaser.AUTO,
     width: 640,
     height: 480,
+    render: {
+        pixelArt: true
+    },
+    physics: {
+        default: 'arcade',
+        arcade: {
+        }
+    },
     scene: [ Title, Menu, Play ]
 }
 
 // reserve keyboard bindings
-let keyFIRE, keyRESET, keyLEFT, keyRIGHT;
+let keyJUMP, keyRESET, keyLEFT, keyRIGHT, keyATTACK;
 
 let game = new Phaser.Game(config);
 // set UI sizes

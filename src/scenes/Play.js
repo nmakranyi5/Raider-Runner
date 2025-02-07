@@ -6,6 +6,15 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        this.anims.create({
+            key: 'walk-right',
+            frameRate: 5,
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('raider', {
+                start: 6,
+                end: 8
+            })
+        })
         // place tile sprite
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
         // green UI background
@@ -16,15 +25,21 @@ class Play extends Phaser.Scene {
         this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0, 0);
         // add raider (p1)
-        this.raider = new Raider(this, game.config.width/4, game.config.height - borderUISize - borderPadding * 8, 'raider').setOrigin(0.5, 0).setScale(1.5);
-        this.axe = new Axe(this, game.config.width/4, game.config.height - borderUISize - borderPadding * 8, 'axe').setOrigin(0.5, 0).setScale(1.5);
+        //this.raider = new Raider(this, game.config.width/4, game.config.height - borderUISize - borderPadding * 8, 'raider').setOrigin(0.5, 0).setScale(1.5);
+        this.player = this.physics.add.sprite(game.config.width/4, game.config.height - borderUISize - borderPadding * 7, 'raider', 7).setScale(1.5)
+        this.player.anims.play('walk-right', true);
+        this.player.setCollideWorldBounds(true);
+        this.player.setGravityY(1000);
+        this.axe = this.physics.add.sprite(this.player.x, this.player.y, 'axe').setScale(1.5).setOrigin(0.5, 0).setVisible(false).setActive(false);
         // add spaceships (x3)
         // define keys
-        this.keyATTACK = this.input.activePointer;
+        keyATTACK = this.input.activePointer;
+
         keyRESET = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
-        //keyJUMP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyJUMP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+
         // initialize score
         this.p1Score = 0;
         // display score
@@ -96,8 +111,12 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(this.keyATTACK)) {
-            console.log("Axe thrown!");
+        if (keyATTACK.isDown) {
+            this.throwAxe();
+        }
+        if (this.axe.x > game.config.width - borderUISize - 15) {
+            this.axe.setActive(false).setVisible(false);
+            this.axe.setVelocityX(0);
         }
         // check key input for restart
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyRESET)) {
@@ -107,6 +126,11 @@ class Play extends Phaser.Scene {
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start("menuScene")
         }
+
+        if (Phaser.Input.Keyboard.JustDown(keyJUMP)) {
+            this.player.setVelocityY(-500);
+        }
+
         this.background.tilePositionX -= 4;
         /*
         if(!this.gameOver) {               
@@ -137,6 +161,17 @@ class Play extends Phaser.Scene {
         if(highScore < this.p1Score)
         {
             highScore = this.p1Score;
+        }
+    }
+
+    throwAxe()
+    {
+        if (!this.axe.active) {
+            this.axe.setPosition(this.player.x, this.player.y);
+            this.axe.setVisible(true);
+            this.axe.setActive(true);
+            this.axe.setVelocityX(400);
+            this.axe.setAngularVelocity(100);
         }
     }
     /*
