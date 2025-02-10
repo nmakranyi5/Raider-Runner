@@ -9,15 +9,9 @@ class Menu extends Phaser.Scene {
       this.load.spritesheet('raider', './assets/spritesheets/raider.png', {
         frameWidth: 48
       })
-      this.load.spritesheet('axe', './assets/axe.png', {
-        frameWidth: 48
-      })
-      this.load.spritesheet('coin', './assets/coin.png', {
-        frameWidth: 48
-      })
-      this.load.spritesheet('barricade', './assets/barricade.png', {
-        frameWidth: 48
-      })
+      this.load.image('axe', './assets/axe.png')
+      this.load.image('coin', './assets/coin.png')
+      this.load.image('barricade', './assets/barricade.png')
       // load audio
       this.load.audio('sfx-select', './assets/sfx-select.wav')
 
@@ -60,6 +54,8 @@ class Menu extends Phaser.Scene {
           },
           fixedWidth: 0
       }
+
+      this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
       // display menu text
       this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Welcome to Raider Runner!', menuConfig).setOrigin(0.5);
       this.add.text(game.config.width/2, game.config.height/2, 'Use SPACE to jump, LEFTCLICK to attack', menuConfig).setOrigin(0.5);
