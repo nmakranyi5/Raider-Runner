@@ -104,10 +104,11 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
+
         this.originalTime = game.settings.gameTimer;
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
         this.highScoreText = this.add.text(borderUISize + 467, borderUISize + borderPadding*2, highScore, highScoreConfig);
-        this.timerText = this.add.text(borderUISize + 278, borderUISize + borderPadding*4.3, 0, timeConfig);
+        this.timerText = this.add.text(game.config.width / 2, borderUISize + borderPadding * 4.3, 0, timeConfig).setOrigin(0.5, 0);
         // GAME OVER flag
         this.gameOver = false;
         // 60-second play clock
