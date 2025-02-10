@@ -54,6 +54,7 @@ class Play extends Phaser.Scene {
 
         // adding axe
         this.axe = this.physics.add.sprite(this.player.x, this.player.y, 'axe').setScale(1.5).setOrigin(0.5, 0).setVisible(false).setActive(false);
+        this.axe.body.setEnable(false);
 
         // define keys
         keyATTACK = this.input.activePointer;
@@ -133,6 +134,14 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+        /*
+        this.time.addEvent({
+            delay: Phaser.Math.Between(2000, 4000),
+            callback: this.spawnKnight,
+            callbackScope: this,
+            loop: true
+        });
+        */
     }
 
     update() {
@@ -143,15 +152,11 @@ class Play extends Phaser.Scene {
         if (this.axe.x > game.config.width - borderUISize - 15) {
             this.axe.setActive(false).setVisible(false);
             this.axe.setVelocityX(0);
+            this.axe.body.setEnable(false);
         }
 
         // check key input for restart
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyRESET)) {
-            game.settings.gameTimer = this.originalTime; // set timer back to original time
-            this.scene.restart()
-        }
-
-        if(Phaser.Input.Keyboard.JustDown(keyRESET)) {
             game.settings.gameTimer = this.originalTime; // set timer back to original time
             this.scene.restart()
         }
@@ -187,6 +192,7 @@ class Play extends Phaser.Scene {
             this.axe.setActive(true);
             this.axe.setVelocityX(400);
             this.axe.setAngularVelocity(100);
+            this.axe.body.setEnable(true);
         }
     }
 
@@ -197,9 +203,7 @@ class Play extends Phaser.Scene {
             let x = 800;
             let y = 380;
             let barricade = this.physics.add.sprite(x, y, 'barricade').setScale(2)
-            barricade.body.setSize(barricade.width * 0.1, barricade.height * 0.1);
-            barricade.body.setOffset(barricade.width * 0.25, barricade.height * 0.2);
-            this.physics.add.collider(this.player, barricade, this.handlePlayerCollision, null, this);
+            this.physics.add.collider(this.player, barricade, this.handlePlayerObstacleCollision, null, this);
             this.physics.add.collider(this.axe, barricade, this.handleAxeCollision, null, this);
         
             barricade.setVelocityX(-200);
@@ -212,13 +216,65 @@ class Play extends Phaser.Scene {
         }
     }
 
-    handlePlayerCollision(player, obstacle) {
+    spawnKnight() {
+        if(this.gameOver === false)
+        {
+            console.log("spawning knight")
+            let x = 800;
+            let y = 380;
+            let barricade = this.physics.add.sprite(x, y, 'barricade').setScale(2)
+            barricade.body.setSize(barricade.width * 0.1, barricade.height * 0.1);
+            barricade.body.setOffset(barricade.width * 0.25, barricade.height * 0.2);
+            this.physics.add.collider(this.player, barricade, this.handlePlayerObstacleCollision, null, this);
+            this.physics.add.collider(this.axe, barricade, this.handleAxeCollision, null, this);
+        
+            barricade.setVelocityX(-200);
+            barricade.setImmovable(true);
+            barricade.body.allowGravity = false;
+    
+            if (barricade.x < 100) {
+                barricade.destroy();
+            }
+        }
+    }
+
+    spawnCoin() {
+        if(this.gameOver === false){
+            console.log("spawning coin")
+            let x = 800;
+            let y = 380;
+            let coin = this.physics.add.sprite(x, y, 'coin').setScale(2)
+            this.physics.add.collider(this.player, coin, this.handlePlayerCoinCollision, null, this);
+        
+            coin.setVelocityX(-200);
+            coin.body.allowGravity = false;
+    
+            if (coin.x < 100) {
+                coin.destroy();
+            }
+        }
+    }
+
+    handlePlayerObstacleCollision(player, obstacle) {
         console.log("Collision detected!");
+        this.player.setVelocityX(0);
         this.gameOver = true;
     }
 
+    handlePlayerCoinCollision(player, coin) {
+        console.log("coin collision");
+        this.p1Score += 50;
+        this.player.setVelocityX(0);
+        // Destroy the coin
+        coin.destroy();
+    }
+    
     handleAxeCollision(axe, obstacle) {
         console.log("axe hit!");
         obstacle.destroy()
+        this.axe.setActive(false).setVisible(false);
+        this.axe.setVelocityX(0);
+        this.axe.body.setEnable(false);
+        this.spawnCoin()
     }
 }

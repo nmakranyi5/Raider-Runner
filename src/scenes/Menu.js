@@ -25,17 +25,6 @@ class Menu extends Phaser.Scene {
   }
 
   create() {
-      // animation configuration
-      this.anims.create({
-        key: 'idle',
-        frameRate: 0,
-        repeat: -1,
-        frames: this.anims.generateFrameNumbers('raider', {
-            start: 7,
-            end: 7
-        })
-      })
-
       let menuConfig = {
           fontFamily: 'Courier',
           fontSize: '28px',
