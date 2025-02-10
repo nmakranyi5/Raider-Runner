@@ -9,7 +9,6 @@ let scoreConfig = {
     top: 5,
     bottom: 5,
     },
-    fixedWidth: 100
 }
 
 class Play extends Phaser.Scene {
@@ -48,6 +47,8 @@ class Play extends Phaser.Scene {
         this.player.anims.play('walk-right', true);
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, this.ground);
+        this.player.body.setSize(this.player.width * 0.6, this.player.height * 0.9);
+
         //this.player.setImmovable(true);
         this.player.setGravityY(1000);
 
@@ -164,8 +165,8 @@ class Play extends Phaser.Scene {
 
         if(this.gameOver === true)
         {
-            this.add.text(game.config.width, game.config.height, 'GAME OVER', scoreConfig).setOrigin(0.5)
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5)
+            this.add.text(game.config.width / 2, game.config.height / 2, 'GAME OVER', scoreConfig).setOrigin(0.5)
+            this.add.text(game.config.width / 2, game.config.height / 2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5)
             this.player.setVisible(false);
         }
 
