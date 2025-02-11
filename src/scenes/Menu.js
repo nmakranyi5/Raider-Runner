@@ -42,11 +42,13 @@ class Menu extends Phaser.Scene {
       // display menu text
       this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'Welcome to Raider Runner!', menuConfig).setOrigin(0.5);
       this.add.text(game.config.width/2, game.config.height/2, 'Use SPACE to jump, LEFTCLICK to attack', menuConfig).setOrigin(0.5);
+      this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press C for credits', menuConfig).setOrigin(0.5);
       menuConfig.backgroundColor = '#00FF00';
       menuConfig.color = '#000';
-      this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press -> to begin', menuConfig).setOrigin(0.5);
+      this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding * 5, 'Press -> to begin', menuConfig).setOrigin(0.5);
       // define keys
       keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+      keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
   }
   update() {
       if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
@@ -55,6 +57,10 @@ class Menu extends Phaser.Scene {
         }
         this.sound.play('sfx-select');
         this.scene.start('playScene');    
+      }
+      if (Phaser.Input.Keyboard.JustDown(keyC)) {
+        this.sound.play('sfx-select');
+        this.scene.start('creditsScene');    
       }
   }
 }

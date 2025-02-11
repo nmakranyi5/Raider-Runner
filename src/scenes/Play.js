@@ -55,6 +55,7 @@ class Play extends Phaser.Scene {
         // adding axe
         this.axe = this.physics.add.sprite(this.player.x, this.player.y, 'axe').setScale(1.5).setOrigin(0.5, 0).setVisible(false).setActive(false);
         this.axe.body.setEnable(false);
+        this.lastAxeThrow = 0;
 
         // define keys
         keyATTACK = this.input.activePointer;
@@ -134,6 +135,14 @@ class Play extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
+        this.time.addEvent({
+            delay: Phaser.Math.Between(3000, 5000),
+            callback: this.spawnCoin,
+            callbackScope: this,
+            loop: true
+        });
+
         /*
         this.time.addEvent({
             delay: Phaser.Math.Between(2000, 4000),
@@ -146,7 +155,11 @@ class Play extends Phaser.Scene {
 
     update() {
         if (this.gameOver === false && keyATTACK.isDown) {
-            this.throwAxe();
+            let currentTime = this.time.now;
+            if (currentTime - this.lastAxeThrow > 2000) {
+                this.throwAxe();
+                this.lastAxeThrow = currentTime;
+            }
         }
 
         if (this.axe.x > game.config.width - borderUISize - 15) {
@@ -176,7 +189,7 @@ class Play extends Phaser.Scene {
             this.player.setVisible(false);
         }
 
-        this.background.tilePositionX -= 4;
+        this.background.tilePositionX += 4;
 
         if(highScore < this.p1Score)
         {
@@ -205,12 +218,12 @@ class Play extends Phaser.Scene {
             let barricade = this.physics.add.sprite(x, y, 'barricade').setScale(2)
             this.physics.add.collider(this.player, barricade, this.handlePlayerObstacleCollision, null, this);
             this.physics.add.collider(this.axe, barricade, this.handleAxeCollision, null, this);
-        
+            barricade.body.setSize(barricade.width * 0.6, barricade.height * 0.6);
             barricade.setVelocityX(-200);
             barricade.setImmovable(true);
             barricade.body.allowGravity = false;
     
-            if (barricade.x < 100) {
+            if (barricade.x < 500) {
                 barricade.destroy();
             }
         }
@@ -232,7 +245,7 @@ class Play extends Phaser.Scene {
             barricade.setImmovable(true);
             barricade.body.allowGravity = false;
     
-            if (barricade.x < 100) {
+            if (barricade.x < 200) {
                 barricade.destroy();
             }
         }
@@ -275,6 +288,5 @@ class Play extends Phaser.Scene {
         this.axe.setActive(false).setVisible(false);
         this.axe.setVelocityX(0);
         this.axe.body.setEnable(false);
-        this.spawnCoin()
     }
 }
