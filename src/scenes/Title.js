@@ -7,7 +7,8 @@ class Title extends Phaser.Scene {
         // load images/tile sprites
         this.load.image('background', './assets/background.png');
         // load audio
-        this.load.audio('sfx-select', './assets/sfx-select.wav')
+        this.load.audio('select', './assets/audio/select.mp3')
+        this.load.audio('titleMusic', './assets/audio/titlescreen.mp3')
     }
 
     create() {
@@ -32,10 +33,15 @@ class Title extends Phaser.Scene {
         titleConfig.color = '#000';
         console.log(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.music = this.sound.add('titleMusic', {
+            loop: true,
+            volume: 0.5
+        });
+        this.music.play();
     }
     update() {
         if (Phaser.Input.Keyboard.JustDown(keySPACE)) {
-          this.sound.play('sfx-select');
+          this.sound.play('select');
           this.scene.start('menuScene');    
         }
     }

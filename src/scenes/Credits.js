@@ -23,7 +23,7 @@ class Credits extends Phaser.Scene {
       this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
       // display menu text
       this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'CREDITS', menuConfig).setOrigin(0.5);
-      this.add.text(game.config.width/2, game.config.height/2, 'Use SPACE to jump, LEFTCLICK to attack', menuConfig).setOrigin(0.5);
+      this.add.text(game.config.width/2, game.config.height/2, 'Music and sounds from Pixabay', menuConfig).setOrigin(0.5);
       menuConfig.backgroundColor = '#00FF00';
       menuConfig.color = '#000';
       this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press -> to return to menu', menuConfig).setOrigin(0.5);
@@ -35,7 +35,7 @@ class Credits extends Phaser.Scene {
         game.settings = {
           gameTimer: Infinity  
         }
-        this.sound.play('sfx-select');
+        this.sound.play('select');
         this.scene.start('menuScene');    
       }
   }

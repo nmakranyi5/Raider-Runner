@@ -14,15 +14,11 @@ class Menu extends Phaser.Scene {
       this.load.image('barricade', './assets/barricade.png')
       this.load.image('knight', './assets/knight.png')
       // load audio
-      this.load.audio('sfx-select', './assets/sfx-select.wav')
-
-      // load spritesheet
-      this.load.spritesheet('explosion', './assets/explosion.png', {
-          frameWidth: 64,
-          frameHeight: 32,
-          startFrame: 0,
-          endFrame: 9
-      })
+      this.load.audio('coinpickup', './assets/audio/coinpickup.wav')
+      this.load.audio('knighthit', './assets/audio/knighthit.mp3')
+      this.load.audio('barricadehit', './assets/audio/barricadehit.mp3')
+      this.load.audio('jump', './assets/audio/jump.mp3')
+      this.load.audio('gameplayMusic', './assets/audio/gameplay.mp3')
   }
 
   create() {
@@ -53,14 +49,14 @@ class Menu extends Phaser.Scene {
   }
   update() {
       if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-        game.settings = {
-          gameTimer: Infinity  
+        if (this.music) {
+          this.music.stop();
         }
-        this.sound.play('sfx-select');
+        this.sound.play('select');
         this.scene.start('playScene');    
       }
       if (Phaser.Input.Keyboard.JustDown(keyC)) {
-        this.sound.play('sfx-select');
+        this.sound.play('select');
         this.scene.start('creditsScene');    
       }
   }
