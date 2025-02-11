@@ -12,6 +12,7 @@ class Menu extends Phaser.Scene {
       this.load.image('axe', './assets/axe.png')
       this.load.image('coin', './assets/coin.png')
       this.load.image('barricade', './assets/barricade.png')
+      this.load.image('knight', './assets/knight.png')
       // load audio
       this.load.audio('sfx-select', './assets/sfx-select.wav')
 

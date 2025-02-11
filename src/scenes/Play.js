@@ -143,14 +143,12 @@ class Play extends Phaser.Scene {
             loop: true
         });
 
-        /*
         this.time.addEvent({
             delay: Phaser.Math.Between(2000, 4000),
             callback: this.spawnKnight,
             callbackScope: this,
             loop: true
         });
-        */
     }
 
     update() {
@@ -223,7 +221,7 @@ class Play extends Phaser.Scene {
             barricade.setImmovable(true);
             barricade.body.allowGravity = false;
     
-            if (barricade.x < 500) {
+            if (barricade.x < 100) {
                 barricade.destroy();
             }
         }
@@ -235,18 +233,16 @@ class Play extends Phaser.Scene {
             console.log("spawning knight")
             let x = 800;
             let y = 380;
-            let barricade = this.physics.add.sprite(x, y, 'barricade').setScale(2)
-            barricade.body.setSize(barricade.width * 0.1, barricade.height * 0.1);
-            barricade.body.setOffset(barricade.width * 0.25, barricade.height * 0.2);
-            this.physics.add.collider(this.player, barricade, this.handlePlayerObstacleCollision, null, this);
-            this.physics.add.collider(this.axe, barricade, this.handleAxeCollision, null, this);
-        
-            barricade.setVelocityX(-200);
-            barricade.setImmovable(true);
-            barricade.body.allowGravity = false;
+            let knight = this.physics.add.sprite(x, y, 'knight').setScale(2)
+            this.physics.add.collider(this.player, knight, this.handlePlayerObstacleCollision, null, this);
+            this.physics.add.collider(this.axe, knight, this.handleAxeCollision, null, this);
+            knight.body.setSize(knight.width * 0.6, knight.height * 0.6);
+            knight.setVelocityX(-200);
+            knight.setImmovable(true);
+            knight.body.allowGravity = false;
     
-            if (barricade.x < 200) {
-                barricade.destroy();
+            if (knight.x < 100) {
+                knight.destroy();
             }
         }
     }
