@@ -13,7 +13,7 @@ time, I didn't do too badly. I thought that for the raider, the illusion of the 
 I also liked the design that I made for the knight as well.
 */
 // Music Source: https://pixabay.com/music/search/medieval/
-// Sound Effects Source: 
+// Sound Effects Source: https://pixabay.com/sound-effects/search/game/
 let keySPACE;
 
 let config = {
