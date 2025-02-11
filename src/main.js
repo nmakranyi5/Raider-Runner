@@ -9,7 +9,7 @@ which I had to look at documentation to find out how to do.
 
 For the visual style, since I am not much of an artist, I am not particularily talented at making sprites, but
 I am happy with what I made. Since this was my first real time creating sprites like this, I think that for a first
-time, I didn't do too badly. 
+time, I didn't do too badly. I thought that for the raider, the illusion of the player's helment moving was a pretty cool effect.
 */
 
 let keySPACE;

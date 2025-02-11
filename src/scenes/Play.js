@@ -47,7 +47,7 @@ class Play extends Phaser.Scene {
         this.player.anims.play('walk-right', true);
         this.player.setCollideWorldBounds(true);
         this.physics.add.collider(this.player, this.ground);
-        this.player.body.setSize(this.player.width * 0.6, this.player.height * 0.9);
+        this.player.body.setSize(this.player.width * 0.4, this.player.height * 0.9);
 
         //this.player.setImmovable(true);
         this.player.setGravityY(1000);
@@ -130,7 +130,7 @@ class Play extends Phaser.Scene {
         });
 
         this.time.addEvent({
-            delay: Phaser.Math.Between(1000, 2000),
+            delay: Phaser.Math.Between(1000, 3000),
             callback: this.spawnBarricade,
             callbackScope: this,
             loop: true
